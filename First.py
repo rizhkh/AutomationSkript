@@ -38,12 +38,37 @@ if(wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("InlineDialog
     a.click()
 driver.switch_to.default_content()
 
-element = driver.find_element_by_id('Tabnav_Project')
-hover = Actionchains(driver).move_to_element(element)
-hover.perform()
+ab = driver.find_element_by_xpath('//*[@id="navTabGroupDiv"]/span[3]')
+ab.click()
+print ('Success x1')
+element = driver.find_element_by_xpath('//*[@id="Tabnav_Project"]')
 
-if (driver.find_element_by_xpath('//*[@id="trc_utilityaccount"]')):
-    print ('Found it')
+if(driver.find_element_by_xpath('//*[@id="Tabnav_Project"]')):
+    hover = ActionChains(driver).move_to_element(element)
+    hover.perform()
+    print ('Success x2')
+    e = driver.find_element_by_xpath('//*[@id="actionGroupControl_rightNavContainer"]')
+    e.click()
+    print ('aaaaaaaaaaaaaaaaaa')
+    if(driver.find_element_by_id('//*[@id="actionGroupControl_rightNavContainer"]')):
+        element2 = driver.find_element_by_id('//*[@id="actionGroupControl_rightNavContainer"]')
+        hover2 = ActionChains(driver).move_to_element(element2)
+        hover2.perform()
+        print ('Success x3')
+
+#aD = driver.find_element_by_xpath('//*[@id="trc_utilityaccount"]')
+#aD.click()
+#print ('Success x3')
+
+#click 3 times
+
+#if(driver.find_element_by_xpath('//*[@id="navTabGroupDiv"]/span[3]')):
+#    print ("success")
+#element = driver.find_element_by_xpath('//*[@id="navTabGroupDiv"]/span[3]')
+#hover = ActionChains(driver).move_to_element(element)
+#hover.perform()
+#if (driver.find_element_by_xpath('//*[@id="trc_utilityaccount"]')):
+#    print ('Found it')
 
 
 print ('*******************')
