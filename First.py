@@ -30,7 +30,7 @@ driver.get("http://"######":"#########"@#####/######/")
 
 #button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, 'buttonClose')));
 #button.click();
-
+           
 #This basically switches to the inner Frame if it exists with that name
 if(wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("InlineDialog_Iframe"))):
     a = wait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it("InlineDialog_Iframe"))
@@ -43,18 +43,54 @@ ab.click()
 print ('Success x1')
 element = driver.find_element_by_xpath('//*[@id="Tabnav_Project"]')
 
-if(driver.find_element_by_xpath('//*[@id="Tabnav_Project"]')):
-    hover = ActionChains(driver).move_to_element(element)
-    hover.perform()
-    print ('Success x2')
-    e = driver.find_element_by_xpath('//*[@id="actionGroupControl_rightNavContainer"]')
-    e.click()
-    print ('aaaaaaaaaaaaaaaaaa')
-    if(driver.find_element_by_id('//*[@id="actionGroupControl_rightNavContainer"]')):
-        element2 = driver.find_element_by_id('//*[@id="actionGroupControl_rightNavContainer"]')
-        hover2 = ActionChains(driver).move_to_element(element2)
-        hover2.perform()
-        print ('Success x3')
+#Makes sure that you are paying attention
+numb = input("enter 1 to continue? ")
+if(numb=='1'):
+    if(driver.find_element_by_xpath('//*[@id="Tabnav_Project"]/a')):
+        print('inside x2')
+        a1 = driver.find_element_by_xpath('//*[@id="Tabnav_Project"]/a')
+        a1.click()
+        a2 = driver.find_element_by_xpath('//*[@id="Tabnav_Project"]/a')
+        a2.click()
+        print ('Success x2')
+
+
+numb = input("enter 1 to continue to utility? ")
+if (numb == '1'): ## MAKE SURE YOU MOVE TO UTILITY ACCOUNT MANUALLY
+    if (wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("contentIFrame0"))):
+        #driver.switch_to.frame("contentIFrame0")
+        driver.switch_to.default_content()
+        wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("contentIFrame0"))
+        print ('I see it')
+        #driver.switch_to.frame(driver.find_element_by_id("contentIFrame0"))
+        #wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("contentIFrame0"))
+        #wait.until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, '//*[@id="contentIFrame0"]')))
+        searchbarclick = driver.find_element_by_id('crmGrid_SavedNewQuerySelector')
+        driver.switch_to.default_content()
+        #Goes to the clickable frame
+        wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("contentIFrame1")) #all clickables are in frame1
+        #Clicks the search bar to enter something
+        searchbarclick2 = driver.find_element_by_xpath('//*[@id="crmGrid_findCriteriaImg"]')
+        searchbarclick2.click()
+        wait(driver, 10).until(EC.presence_of_element_located((By.ID, 'crmGrid_findHintText')))
+        searchbarclick = driver.find_element_by_xpath('//*[@id="crmGrid_findHintText"]')
+        searchbarclick.click()
+        print ('successs x3')
+        #inputElement = driver.find_element_by_xpath('//*[@id="crmGrid_quickFindContainer"]')
+        print ('successs x4')
+        searchbarclick.send_keys("6739540306")
+        print ('successs x5')
+
+        #a = wait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it("InlineDialog_Iframe"))
+
+    #e = driver.find_element_by_xpath('//*[@id="actionGroupControl_rightNavContainer"]')
+    #e.click()
+    #print ('aaaaaaaaaaaaaaaaaa')
+    #if(driver.find_element_by_id('//*[@id="actionGroupControl_rightNavContainer"]')):
+        #element2 = driver.find_element_by_id('//*[@id="actionGroupControl_rightNavContainer"]')
+        #hover2 = ActionChains(driver).move_to_element(element2)
+        #hover2.perform()
+        #print ('Success x3')
 
 #aD = driver.find_element_by_xpath('//*[@id="trc_utilityaccount"]')
 #aD.click()
