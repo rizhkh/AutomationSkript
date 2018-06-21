@@ -15,8 +15,7 @@ pwd = "###"
 #driver = webdriver.Chrome()
 driver = webdriver.Chrome()
 driver.get("http://###:###@###/###/")
-
-numbers = [70547-50003]#, 1111111, 2222222, 3333333, 4444444]
+numbers = ['6609495505']#, 1111111, 2222222, 3333333, 4444444]
 
 
 if(wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("InlineDialog_Iframe"))):
@@ -39,6 +38,7 @@ if(numb=='1'):
         a2 = driver.find_element_by_xpath('//*[@id="Tabnav_Project"]/a')
         a2.click()
 
+window_before = driver.window_handles[0]
 
 numb = input("enter 1 to continue to utility? ")
 if (numb == '1'): ## MAKE SURE YOU MOVE TO UTILITY ACCOUNT MANUALLY
@@ -62,45 +62,59 @@ if (numb == '1'): ## MAKE SURE YOU MOVE TO UTILITY ACCOUNT MANUALLY
         searchbarclick3.send_keys(numbers)
         searchbarclick2 = driver.find_element_by_id("crmGrid_findCriteriaButton")
         searchbarclick2.click()
+
         # THIS CHECKS ALL THE ENTRIES IF EXITS
         if(driver.find_element_by_xpath('//*[@id="crmGrid_gridBodyTable_checkBox_Image_All"]')):
             selAll = driver.find_element_by_xpath('//*[@id="crmGrid_gridBodyTable_checkBox_Image_All"]')
             selAll.click()
+            #IF YOU HAVE ANY PROBLEMS ITS PROBABLY RIGHT HERE PROBLEM OPENING UP EDIT
+            ## MAKES SURE EDIT BUTTON IS VISIBLE
+            driver.switch_to.default_content()
+            time.sleep(2)  ## Try this without sleep
+            ## THIS PRESSED THE EDIT BUTTON
+            if(driver.find_element_by_xpath("//*[@id='trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit']/span/a/span")):
+                editbuttonclick = driver.find_element_by_xpath("//*[@id='trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit']/span/a/span")
+                hover = ActionChains(driver).move_to_element(editbuttonclick)
+                hover.perform()
+                editbuttonclick.click()
+
+        # moves to the new window or popup
+        window_after = driver.window_handles[1]
+        driver.switch_to.window(window_after)
+        print('success')
 
 
-#IF YOU HAVE ANY PROBLEMS ITS PROBABLY RIGHT HERE PROBLEM OPENING UP EDIT
-## MAKES SURE EDIT BUTTON IS VISIBLE
+        if(driver.find_element_by_xpath( "//*[@id='DlgHdTitle']" )):
+            MTClick = driver.find_element_by_xpath( "// *[ @ id = 'trc_mergedto_lookupTable'] / tbody / tr / td[1] / div" )
+            MTClick.click()
+            MTClick2 = driver.find_element_by_xpath( "//*[@id='trc_mergedto_ledit']" ) # inputs the search bar
+            MTClick2.send_keys(numbers, Keys.ENTER)
+            if(driver.find_element_by_class_name( "ms-crm-IL-MenuItem-MoreInfoItem" )):
+                MTClick3 = driver.find_element_by_class_name("ms-crm-IL-MenuItem-MoreInfoItem")
+                MTClick3.click()
+            ConfrimClick = driver.find_element_by_id("butBegin")
+            ConfrimClick.click()
+            #while (window_after==True) :
+            #    pass
 
-driver.switch_to.default_content()
-time.sleep(1)  ## Try this without sleep
-
-if(driver.find_element_by_xpath("//*[@id='trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit']/span/a/span")):
-    editbuttonclick = driver.find_element_by_xpath("//*[@id='trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit']/span/a/span")
-    hover = ActionChains(driver).move_to_element(editbuttonclick)
-    hover.perform()
-    editbuttonclick.click()
+        #if((window_after==False or (window_after==None)))  :
+            #print("POP UP CLOSED")
 
 
-# moves to the new window or popup
-window_before = driver.window_handles[0]
-window_after = driver.window_handles[1]
-driver.switch_to.window(window_after)
-print ('success')
 
-if(driver.find_element_by_xpath( "//*[@id='DlgHdTitle']" )):
-    MTClick = driver.find_element_by_xpath( "// *[ @ id = 'trc_mergedto_lookupTable'] / tbody / tr / td[1] / div" )
-    MTClick.click()
-    MTClick2 = driver.find_element_by_xpath( "//*[@id='trc_mergedto_ledit']" ) # inputs the search bar
-    MTClick2.send_keys(numbers, Keys.ENTER)
-    if(driver.find_element_by_class_name( "ms-crm-IL-MenuItem-MoreInfoItem" )):
-        MTClick3 = driver.find_element_by_class_name("ms-crm-IL-MenuItem-MoreInfoItem")
-        MTClick3.click()
-    ConfrimClick = driver.find_element_by_id("butBegin")
-    ConfrimClick.click()
+    driver.switch_to.window(window_before)
 
 ##### AT THIS POINT MERGING IS DONE AND ITS BACK IN THE MAIN WINDOW
-driver.switch_to.window(window_before)
+
+
+
+else :
+    print ("Number not in database")
 
 print ('*******************')
+
+
+
 #driver.close()
+
 
