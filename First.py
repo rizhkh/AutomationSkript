@@ -90,12 +90,26 @@ if (numb == '1'): ## MAKE SURE YOU MOVE TO UTILITY ACCOUNT MANUALLY
 
 print ('outside x1')
 #wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("contentIFrame1"))
+#driver.switch_to.default_content()
 driver.switch_to.default_content()
 print ('Success x12')
-tre = driver.find_element_by_xpath('//*[@id="trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit"]/span/a/span')
+time.sleep(4)
+#tre = driver.find_element_by_xpath('//*[@id="trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit"]/span/a/span')
+#if(driver.find_elements_by_class_name("ms-crm-Menu-Label")):
+#    print ("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
+#editbuttonclick = driver.find_element_by_xpath('//*[@id="trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit"]/span/a/img')
+    #driver.find_elements_by_class_name("ms-crm-CommandBar-Button ms-crm-Menu-Label")
+#editbuttonclick = driver.find_element_by_id('//*[@id="trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit"]/span/a/img')
+if(driver.find_element_by_xpath("//*[@id='trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit']/span/a/span")):
+    print('Success x1')
+    editbuttonclick = driver.find_element_by_xpath("//*[@id='trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit']/span/a/span")
+    hover = ActionChains(driver).move_to_element(editbuttonclick)
+    hover.perform()
+    editbuttonclick.click()
 print ('Success x2')
-tre.click()
-driver.switch_to.alert() ##switches to popup
+#tre.click()
+#driver.switch_to.alert() ##switches to popup
 print ('*******************')
+
 
 #driver.close()
