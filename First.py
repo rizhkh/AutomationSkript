@@ -109,16 +109,18 @@ driver.switch_to.window(window_after)
 print ('success')
 
 if(driver.find_element_by_xpath( "//*[@id='DlgHdTitle']" )):
-    print('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
     MTClick = driver.find_element_by_xpath( "// *[ @ id = 'trc_mergedto_lookupTable'] / tbody / tr / td[1] / div" )
     MTClick.click()
     MTClick2 = driver.find_element_by_xpath( "//*[@id='trc_mergedto_ledit']" ) # inputs the search bar
     MTClick2.send_keys('6739540306', Keys.ENTER)
-    MTClick3 = driver.find_element_by_xpath( "// *[ @ id = 'trc_mergedto_lookupTable'] / tbody / tr / td[1] / div" )
-    MTClick3.click()
+    if(driver.find_element_by_class_name( "ms-crm-IL-MenuItem-MoreInfoItem" )):
+        MTClick3 = driver.find_element_by_class_name("ms-crm-IL-MenuItem-MoreInfoItem")
+        MTClick3.click()
 
 
 
 print ('*******************')
 
-#driver.close()
+
+
+#driver.close(
