@@ -88,28 +88,37 @@ if (numb == '1'): ## MAKE SURE YOU MOVE TO UTILITY ACCOUNT MANUALLY
         selAll.click()
 
 
-print ('outside x1')
-#wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("contentIFrame1"))
-#driver.switch_to.default_content()
+
+#IF YOU HAVE ANY PROBLEMS ITS PROBABLY RIGHT HERE PROBLEM OPENING UP EDIT
+## MAKES SURE EDIT BUTTON IS VISIBLE
+
 driver.switch_to.default_content()
-print ('Success x12')
-time.sleep(4)
-#tre = driver.find_element_by_xpath('//*[@id="trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit"]/span/a/span')
-#if(driver.find_elements_by_class_name("ms-crm-Menu-Label")):
-#    print ("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
-#editbuttonclick = driver.find_element_by_xpath('//*[@id="trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit"]/span/a/img')
-    #driver.find_elements_by_class_name("ms-crm-CommandBar-Button ms-crm-Menu-Label")
-#editbuttonclick = driver.find_element_by_id('//*[@id="trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit"]/span/a/img')
+time.sleep(1)  ## Try this without sleep
+
 if(driver.find_element_by_xpath("//*[@id='trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit']/span/a/span")):
-    print('Success x1')
     editbuttonclick = driver.find_element_by_xpath("//*[@id='trc_utilityaccount|NoRelationship|HomePageGrid|Mscrm.HomepageGrid.trc_utilityaccount.Edit']/span/a/span")
     hover = ActionChains(driver).move_to_element(editbuttonclick)
     hover.perform()
     editbuttonclick.click()
-print ('Success x2')
-#tre.click()
-#driver.switch_to.alert() ##switches to popup
-print ('*******************')
 
+
+# moves to the new window or popup
+window_before = driver.window_handles[0]
+window_after = driver.window_handles[1]
+driver.switch_to.window(window_after)
+print ('success')
+
+if(driver.find_element_by_xpath( "//*[@id='DlgHdTitle']" )):
+    print('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
+    MTClick = driver.find_element_by_xpath( "// *[ @ id = 'trc_mergedto_lookupTable'] / tbody / tr / td[1] / div" )
+    MTClick.click()
+    MTClick2 = driver.find_element_by_xpath( "//*[@id='trc_mergedto_ledit']" ) # inputs the search bar
+    MTClick2.send_keys('6739540306', Keys.ENTER)
+    MTClick3 = driver.find_element_by_xpath( "// *[ @ id = 'trc_mergedto_lookupTable'] / tbody / tr / td[1] / div" )
+    MTClick3.click()
+
+
+
+print ('*******************')
 
 #driver.close()
