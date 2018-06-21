@@ -16,28 +16,14 @@ pwd = "###"
 driver = webdriver.Chrome()
 driver.get("http://###:###@###/###/")
 
-#assert "Google" in driver.title
-#elem = driver.find_element_by_id("buttonCancel")
-#driver.findElement(By.cssSelector("a[href*='long']")).click();
-#driver.find_element(By.L("navTourButtonText navTourSmallText navTourWhiteText")).click()
-#driver.find_element(By.LINK_TEXT("No, ")).click();
-#if(driver.switch_to().frame(driver.find_element(By.ID("InlineDialog_Iframe")))):
- #   print ('true')
-#driver.find_element(By.CLASS_NAME("navTourCloseButton")).click()
-#driver.switch_to().defaultContent()
-#button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, 'buttonClose')));
-#button.click();
+numbers = [70547-50003]#, 1111111, 2222222, 3333333, 4444444]
 
 
-
-
-
-
-#This basically switches to the inner Frame if it exists with that name
 if(wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("InlineDialog_Iframe"))):
     a = wait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it("InlineDialog_Iframe"))
     a=driver.find_element_by_id('buttonClose') #now it looks for the id if it exists clicks it which closes the popup
     a.click()
+
 driver.switch_to.default_content()
 
 ab = driver.find_element_by_xpath('//*[@id="navTabGroupDiv"]/span[3]')
@@ -57,15 +43,11 @@ if(numb=='1'):
 numb = input("enter 1 to continue to utility? ")
 if (numb == '1'): ## MAKE SURE YOU MOVE TO UTILITY ACCOUNT MANUALLY
     if (wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("contentIFrame0"))):
-        #driver.switch_to.frame("contentIFrame0")
         driver.switch_to.default_content()
         wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("contentIFrame0"))
-        #driver.switch_to.frame(driver.find_element_by_id("contentIFrame0"))
-        #wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("contentIFrame0"))
-        #wait.until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, '//*[@id="contentIFrame0"]')))
         searchbarclick = driver.find_element_by_id('crmGrid_SavedNewQuerySelector')
         driver.switch_to.default_content()
-        #Goes to the clickable frame
+        #Goes to the clickable frame #############<------
         wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("contentIFrame1")) #all clickables are in frame1
         #Clicks the search bar to enter something
         searchbarclick2 = driver.find_element_by_id("crmGrid_findCriteriaButton")
@@ -73,20 +55,17 @@ if (numb == '1'): ## MAKE SURE YOU MOVE TO UTILITY ACCOUNT MANUALLY
         time.sleep(5)
         searchbarclick = driver.find_element_by_xpath('//*[@id="crmQuickFindTD"]/table')
         searchbarclick.click()
-        #inputElement = driver.find_element_by_xpath('//*[@id="crmGrid_quickFindContainer"]')
         #This paste in the number into the form
         ################################
         ##########
-        ##########
-        ##########
         searchbarclick3 = driver.find_element_by_xpath('//*[@id="crmGrid_findCriteria"]')
-        searchbarclick3.send_keys('6739540306')
-        #searchbarclick.submit()
+        searchbarclick3.send_keys(numbers)
         searchbarclick2 = driver.find_element_by_id("crmGrid_findCriteriaButton")
         searchbarclick2.click()
-        selAll = driver.find_element_by_xpath('//*[@id="crmGrid_gridBodyTable_checkBox_Image_All"]')
-        selAll.click()
-
+        # THIS CHECKS ALL THE ENTRIES IF EXITS
+        if(driver.find_element_by_xpath('//*[@id="crmGrid_gridBodyTable_checkBox_Image_All"]')):
+            selAll = driver.find_element_by_xpath('//*[@id="crmGrid_gridBodyTable_checkBox_Image_All"]')
+            selAll.click()
 
 
 #IF YOU HAVE ANY PROBLEMS ITS PROBABLY RIGHT HERE PROBLEM OPENING UP EDIT
@@ -112,15 +91,16 @@ if(driver.find_element_by_xpath( "//*[@id='DlgHdTitle']" )):
     MTClick = driver.find_element_by_xpath( "// *[ @ id = 'trc_mergedto_lookupTable'] / tbody / tr / td[1] / div" )
     MTClick.click()
     MTClick2 = driver.find_element_by_xpath( "//*[@id='trc_mergedto_ledit']" ) # inputs the search bar
-    MTClick2.send_keys('6739540306', Keys.ENTER)
+    MTClick2.send_keys(numbers, Keys.ENTER)
     if(driver.find_element_by_class_name( "ms-crm-IL-MenuItem-MoreInfoItem" )):
         MTClick3 = driver.find_element_by_class_name("ms-crm-IL-MenuItem-MoreInfoItem")
         MTClick3.click()
+    ConfrimClick = driver.find_element_by_id("butBegin")
+    ConfrimClick.click()
 
-
+##### AT THIS POINT MERGING IS DONE AND ITS BACK IN THE MAIN WINDOW
+driver.switch_to.window(window_before)
 
 print ('*******************')
+#driver.close()
 
-
-
-#driver.close(
