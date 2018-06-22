@@ -18,7 +18,6 @@ driver.get("http://###:###@###/###/")
 numbers = ['403852699996','2669930001']
 
 
-
 if(wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("InlineDialog_Iframe"))):
     a = wait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it("InlineDialog_Iframe"))
     a=driver.find_element_by_id('buttonClose') #now it looks for the id if it exists clicks it which closes the popup
@@ -44,30 +43,29 @@ window_before = driver.window_handles[0]
 
 numb = input("enter 1 to continue to utility? ")
 if (numb == '1'): ## MAKE SURE YOU MOVE TO UTILITY ACCOUNT MANUALLY
-    #Problem: runs in the first try having trouble in the second try its about the xpath
-
+    ####
+    #  This for loop is for continuosly running the script // it runs on the total count of enteries
+    ####
     for i in range(len(numbers)):
         print(numbers[i])
-        if (wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("contentIFrame1"))):
-            driver.switch_to.default_content()
+        if (wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("contentIFrame1"))):    #This was for testing purposes but decided to stuck with it because python have identation problems and well uno the rest
+            driver.switch_to.default_content() #This brings back to orignal frame -it actually starts from the next frame
             #Goes to the clickable frame #############<------
             wait(driver, 4).until(EC.frame_to_be_available_and_switch_to_it("contentIFrame1")) #all clickables are in frame1
             #print('frame 1')
             #Clicks the search bar to enter something
-            if (i==0):
+            if (i==0): #ONLY FOR THE FIRST SEQRCH QUERY AFTER THAT ONLY ELSE CONDTITIONS RUNS
                 searchbarclick2 = driver.find_element_by_id("crmGrid_findCriteriaButton")
             else:
-                searchbarclick2 = driver.find_element_by_id("crmGrid_clearCriteriaButton")
+                searchbarclick2 = driver.find_element_by_id("crmGrid_clearCriteriaButton") # this clicks X icon that removes previos entry from search bar
             searchbarclick2.click()
             time.sleep(5)
             searchbarclick = driver.find_element_by_xpath('//*[@id="crmQuickFindTD"]/table')
             searchbarclick.click()
-            #This paste in the number into the form
-            ################################
-            ##########
+            #This copies and paste the entry search bar
             searchbarclick3 = driver.find_element_by_xpath('//*[@id="crmGrid_findCriteria"]')
             searchbarclick3.send_keys(numbers[i])
-            searchbarclick2 = driver.find_element_by_id("crmGrid_findCriteriaButton")
+            searchbarclick2 = driver.find_element_by_id("crmGrid_findCriteriaButton") # presses the search button magnifying icon
             searchbarclick2.click()
 
             # THIS CHECKS ALL THE ENTRIES IF EXITS
@@ -75,7 +73,8 @@ if (numb == '1'): ## MAKE SURE YOU MOVE TO UTILITY ACCOUNT MANUALLY
                 selAll = driver.find_element_by_xpath('//*[@id="crmGrid_gridBodyTable_checkBox_Image_All"]')
                 selAll.click()
 
-                #This exception throw basically checks if record is more than 1 exception is thrown and it understands more records are present so it runs except part
+                #This exception-throw basically checks if record is more than 1 if it is then exception is
+                # thrown and it understands more records are present so it runs except part
                 try:
                     if (driver.find_element_by_xpath('//*[@totalrecordcount="1"]')):
                         #print("***************************")
@@ -85,8 +84,7 @@ if (numb == '1'): ## MAKE SURE YOU MOVE TO UTILITY ACCOUNT MANUALLY
 
 
                 except:
-                    #IF YOU HAVE ANY PROBLEMS ITS PROBABLY RIGHT HERE PROBLEM OPENING UP EDIT
-                ## MAKES SURE EDIT BUTTON IS VISIBLE
+                    ## MAKES SURE EDIT BUTTON IS VISIBLE
                     driver.switch_to.default_content()
                     time.sleep(2)  ## Try this without sleep
                     ## THIS PRESSES THE EDIT BUTTON
@@ -126,18 +124,13 @@ if (numb == '1'): ## MAKE SURE YOU MOVE TO UTILITY ACCOUNT MANUALLY
                 ConfrimClick = driver.find_element_by_id("butBegin")
                 ConfrimClick.click()
 
-        #"// *[ @ id = 'navBar']"
         #driver.switch_to.window(window_before)
         time.sleep(20)
         driver.switch_to.window(window_before)
         if ((driver.find_element_by_id("navBar"))):
             print ("It switched back")
 
-
 ##### AT THIS POINT MERGING IS DONE AND ITS BACK IN THE MAIN WINDOW
-
-
-
 else :
     print ("Number not in database")
 
